@@ -1,16 +1,17 @@
 <script>
-  import Stage, { Passed, InProgress } from '../Stage'
+  // import Stage, { Passed, InProgress } from '../Stage'
+  import fetchPipeline from './fetch-pipeline'
+
+  const pipeline = fetchPipeline(123)
 </script>
 
-<article class="pipeline">
-  <h1>Aurora</h1>
-  <div class="stages">
-    <Stage name="Stage 1" status={Passed} />
-    <Stage name="Stage 2" status={Passed} />
-    <Stage name="Stage 3" status={Passed} />
-    <Stage name="Stage 4" status={InProgress} />
-  </div>
-</article>
+{#await pipeline}
+  <p>Waiting...</p>
+{:then pipeline}
+  <article class="pipeline">
+    <h1>{pipeline.name}</h1>  
+  </article>
+{/await}
 
 <style>
   .pipeline {
