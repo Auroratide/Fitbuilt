@@ -1,5 +1,5 @@
 <script>
-  // import Stage, { Passed, InProgress } from '../Stage'
+  import Stage from '../Stage'
   import fetchPipeline from './fetch-pipeline'
 
   const pipeline = fetchPipeline(123)
@@ -9,7 +9,12 @@
   <p>Waiting...</p>
 {:then pipeline}
   <article class="pipeline">
-    <h1>{pipeline.name}</h1>  
+    <h1>{pipeline.name}</h1>
+    <div class="stages">
+      {#each pipeline.stages as stage (stage.name)}
+        <Stage name={stage.name} status={stage.status} />
+      {/each}
+    </div>
   </article>
 {/await}
 

@@ -1,8 +1,13 @@
 import Pipeline from './Pipeline.svelte'
+import { Passed, Failed } from '../Stage'
 import { render, cleanup, waitForElement } from '@testing-library/svelte'
 import fetch from 'fetch-mock'
 
 describe('Pipeline', () => {
+
+  let wrapper
+  const waitForApi = () => waitForElement(() => wrapper.getByText('Pipeline'))
+  const stage = name => wrapper.getByText(name)
 
   beforeEach(() => {
     fetch.get('/api/services/azure-devops/pipelines/123', {
@@ -10,8 +15,11 @@ describe('Pipeline', () => {
       body: {
         name: 'Pipeline',
         stages: [ {
-          name: 'Stage',
-          status: 'passed'
+          name: 'Passed Stage',
+          status: Passed
+        }, {
+          name: 'Failed Stage',
+          status: Failed
         } ]
       }
     })
@@ -23,10 +31,14 @@ describe('Pipeline', () => {
   })
 
   it('displays stages from the pipelines API', async () => {
-    const wrapper = render(Pipeline)
-    const title = await waitForElement(() => wrapper.getByText('Pipeline'))
+    wrapper = render(Pipeline)
+    await waitForApi()
 
-    expect(title).toBeInTheDocument()
+    const passedStage = stage('Passed Stage')
+    const failedStage = stage('Failed Stage')
+
+    expect(passedStage).toBeInTheDocument()
+    expect(failedStage).toBeInTheDocument()
   })
 
   afterEach(() => {
