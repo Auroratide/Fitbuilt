@@ -39,6 +39,7 @@
     "webpack-cli": "^3.3.6"
   },
   "jest": {
+    "testRegex": ".*\\.example\\.[jt]sx?$",
     "transform": {
       "^.+\\.js$": "babel-jest",
       "^.+\\.svelte$": "jest-transform-svelte"

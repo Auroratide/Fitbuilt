@@ -1,9 +1,7 @@
-<main>
-  <span class="red">Hello Aurora!</span>
-</main>
+<script>
+  import Stage, { Passed } from '../Stage'
+</script>
 
-<style>
-  .red {
-    color: red;
-  }
-</style>
+<main>
+  <Stage name="Aurora" status={Passed} />
+</main>

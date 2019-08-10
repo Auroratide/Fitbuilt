@@ -1,0 +1,5 @@
+export const Passed = 'passed'
+export const Failed = 'failed'
+export const InProgress = 'in-progress'
+export const Pending = 'pending'
+export const Unknown = 'unknown'
