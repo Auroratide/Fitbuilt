@@ -1,7 +1,7 @@
 <script>
-  import Stage, { Passed } from '../Stage'
+  import Pipeline from '../Pipeline'
 </script>
 
 <main>
-  <Stage name="Aurora" status={Passed} />
+  <Pipeline />
 </main>
