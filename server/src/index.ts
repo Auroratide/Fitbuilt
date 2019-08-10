@@ -1,13 +1,5 @@
-import * as path from 'path'
-import express from 'express'
-import api from './api'
+import server from './server'
 
-const app = express()
-const port = 3000
-
-app.use('/api', api)
-app.use(express.static(path.join(__dirname, 'public')))
-
-app.listen(port, () => {
+server.listen(3000, () => {
   console.log('Server is started...') // eslint-disable-line no-console
 })
