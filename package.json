@@ -5,10 +5,11 @@
   "main": "dist/index.js",
   "scripts": {
     "start": "node .",
+    "start:watch": "npm run build && npm-run-all --parallel start 'build -- --watch'",
     "clean": "rm -rf dist",
-    "prebuild": "npm run lint",
     "build": "webpack",
     "lint": "eslint server/**/*",
+    "pretest": "npm run lint",
     "test": "jest client"
   },
   "author": "",
@@ -31,6 +32,7 @@
     "jest": "^24.8.0",
     "jest-transform-svelte": "^2.0.2",
     "mini-css-extract-plugin": "^0.8.0",
+    "npm-run-all": "^4.1.5",
     "svelte": "^3.7.1",
     "svelte-loader": "^2.13.6",
     "ts-loader": "^6.0.4",
