@@ -2,7 +2,9 @@
   import Stage from '../Stage'
   import fetchPipeline from './fetch-pipeline'
 
-  const pipeline = fetchPipeline(123)
+  export let id
+
+  const pipeline = fetchPipeline(id)
 </script>
 
 {#await pipeline}

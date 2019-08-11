@@ -10,7 +10,7 @@ describe('Pipeline', () => {
   const stage = name => wrapper.getByText(name)
 
   beforeEach(() => {
-    fetch.get('/api/services/azure-devops/pipelines/123', {
+    fetch.get('/api/services/azure-devops/pipelines/1', {
       status: 200,
       body: {
         name: 'Pipeline',
@@ -25,13 +25,11 @@ describe('Pipeline', () => {
     })
   })
 
-  it('renders', () => {
-    // <Pipeline />
-    expect(() => render(Pipeline)).not.toThrow()
-  })
-
   it('displays stages from the pipelines API', async () => {
-    wrapper = render(Pipeline)
+    // <Pipeline id="123" />
+    wrapper = render(Pipeline, { props: {
+      id: '1'
+    }})
     await waitForApi()
 
     const passedStage = stage('Passed Stage')
