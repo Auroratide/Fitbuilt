@@ -1,8 +1,7 @@
 import { Status } from '../Pipeline'
 import { Router } from 'express'
-import { ServiceAdaptor } from '../service/ServiceAdaptor'
 
-export default (adaptor: ServiceAdaptor) => {
+export default () => {
   const router = Router()
 
   router.get('/pipelines/:id', (req, res) => {

@@ -3,6 +3,6 @@ import pipelines from './pipelines'
 
 const router = Router()
 
-router.use('/services/azure-devops', pipelines(null))
+router.use('/services/azure-devops', pipelines())
 
 export default router
