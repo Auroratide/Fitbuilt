@@ -3,7 +3,7 @@ import api from './index'
 import server from '../server'
 import pipelines from './pipelines'
 import { ServiceAdapter } from '../service/ServiceAdapter'
-import { Stage, Status } from '../Pipeline'
+import { Pipeline, Status } from '../Pipeline'
 import fetch from 'node-fetch'
 
 interface MockConfig {
@@ -11,12 +11,16 @@ interface MockConfig {
 }
 
 class MockAdapter implements ServiceAdapter<MockConfig> {
-  public currentStages(id: string, config: MockConfig): Promise<Stage[]> {
+  public currentPipeline(id: string, config: MockConfig): Promise<Pipeline> {
     if(id === '1' && config.param === 'value') {
-      return Promise.resolve([ {
-        name: 'Stage 1',
-        status: Status.Passed
-      } ])
+      return Promise.resolve({
+        name: 'Pipeline',
+        status: Status.Passed,
+        stages: [ {
+          name: 'Stage 1',
+          status: Status.Passed
+        } ]
+      })
     } else {
       return Promise.reject()
     }
@@ -35,7 +39,8 @@ describe('api', () => {
         .then(res => res.json())
 
       expect(result).toEqual({
-        name: 'Unknown',
+        name: 'Pipeline',
+        status: Status.Passed,
         stages: [ {
           name: 'Stage 1',
           status: Status.Passed

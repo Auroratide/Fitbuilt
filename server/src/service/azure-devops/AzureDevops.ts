@@ -6,12 +6,13 @@ import fetch from '../../fetch'
 const AZURE_DEVOPS_CRED = process.env.AZURE_DEVOPS_CRED
 
 export class AzureDevops {
-  public mostRecentBuild(definitionId: string, config: Config): Promise<BuildsResponse> {
+  public mostRecentBuild(definitionId: number, config: Config): Promise<Build> {
     return fetch(`${this.baseUrl(config)}/build/builds?definitions=${definitionId}&$top=1&${this.versionParam}`, {
       headers: {
         Authorization: this.auth
       }
     }).then(res => res.json())
+      .then((res: BuildsResponse) => res.value[0])
   }
 
   public timelineForBuild(buildId: number, config: Config): Promise<BuildTimelineResponse> {
@@ -41,6 +42,31 @@ export interface BuildsResponse {
 
 export interface Build {
   id: number
+  status: BuildStatus
+  result: BuildResult
+  definition: DefinitionReference
+}
+
+export enum BuildStatus {
+  All = 'all',
+  Cancelling = 'cancelling',
+  Completed = 'completed',
+  InProgress = 'inProgress',
+  None = 'none',
+  NotStarted = 'notStarted',
+  Postponed = 'postponed'
+}
+
+export enum BuildResult {
+  Canceled = 'canceled',
+  Failed = 'failed',
+  None = 'none',
+  PartiallySucceeded = 'partiallySucceeded',
+  Succeeded = 'succeeded'
+}
+
+export interface DefinitionReference {
+  name: string
 }
 
 export interface BuildTimelineResponse {

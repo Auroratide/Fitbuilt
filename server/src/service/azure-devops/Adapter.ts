@@ -1,7 +1,7 @@
 import { ServiceAdapter } from '../ServiceAdapter'
 import { Config } from './Config'
 import { AzureDevops, TimelineRecord } from './AzureDevops'
-import { Stage, Status } from '../../Pipeline'
+import { Pipeline, Stage, Status } from '../../Pipeline'
 
 export class Adapter implements ServiceAdapter<Config> {
   private service: AzureDevops
@@ -10,11 +10,17 @@ export class Adapter implements ServiceAdapter<Config> {
     this.service = service
   }
 
-  public currentStages(id: string, config: Config): Promise<Stage[]> {
-    return this.service.mostRecentBuild(id, config)
-      .then(res => this.service.timelineForBuild(res.value[0].id, config))
-      .then(res => res.records.sort(this.byOrderNumber))
-      .then(records => records.map(this.toStage))
+  public async currentPipeline(id: string, config: Config): Promise<Pipeline> {
+    const build = await this.service.mostRecentBuild(parseInt(id), config)
+    const timeline = await this.service.timelineForBuild(build.id, config)
+
+    return {
+      name: build.definition.name,
+      status: Status.Passed,
+      stages: timeline.records
+        .sort(this.byOrderNumber)
+        .map(this.toStage)
+    }
   }
 
   private byOrderNumber(left: TimelineRecord, right: TimelineRecord): number {

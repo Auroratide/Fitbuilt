@@ -1,5 +1,5 @@
-import { Stage } from '../Pipeline'
+import { Pipeline } from '../Pipeline'
 
 export interface ServiceAdapter<ConfigType> {
-  currentStages(id: string, config: ConfigType): Promise<Stage[]>
+  currentPipeline(id: string, config: ConfigType): Promise<Pipeline>
 }
