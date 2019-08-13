@@ -12,7 +12,7 @@ describe('Azure Devops', () => {
     project: 'Project'
   }
 
-  it('returns the current pipeline', async () => {
+  it('returns a successful pipeline', async () => {
     scenarios.allBuildsPassed()
 
     const pipeline = await adapter.currentPipeline('123', config)
@@ -25,6 +25,21 @@ describe('Azure Devops', () => {
         status: Status.Passed
       }, {
         name: 'Functional Tests',
+        status: Status.Passed
+      } ]
+    })
+  })
+
+  it('filters out non-task and azure-specific stages', async () => {
+    scenarios.withExtraneousStages()
+
+    const pipeline = await adapter.currentPipeline('123', config)
+
+    expect(pipeline).toEqual({
+      name: 'Pipeline Name',
+      status: Status.Passed,
+      stages: [ {
+        name: 'Build',
         status: Status.Passed
       } ]
     })

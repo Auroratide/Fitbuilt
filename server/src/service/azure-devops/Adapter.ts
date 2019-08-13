@@ -18,9 +18,27 @@ export class Adapter implements ServiceAdapter<Config> {
       name: build.definition.name,
       status: Status.Passed,
       stages: timeline.records
+        .filter(this.keepOnlyTasks)
+        .filter(this.removeBuiltInAzureStages)
         .sort(this.byOrderNumber)
         .map(this.toStage)
     }
+  }
+
+  private keepOnlyTasks(record: TimelineRecord): boolean {
+    return record.type === 'Task'
+  }
+
+  private removeBuiltInAzureStages(record: TimelineRecord): boolean {
+    return ![
+      'Checkpoint',
+      'Initialize job',
+      'Checkout',
+      'Post-job: Checkout',
+      'Finalize Job',
+      'Report build status',
+      '__default'
+    ].includes(record.name)
   }
 
   private byOrderNumber(left: TimelineRecord, right: TimelineRecord): number {
