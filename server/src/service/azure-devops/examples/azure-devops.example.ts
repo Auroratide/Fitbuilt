@@ -66,5 +66,20 @@ describe('Azure Devops', () => {
     })
   })
 
+  it('indicates stages that failed', async () => {
+    scenarios.buildFailed()
+
+    const pipeline = await adapter.currentPipeline('123', config)
+
+    expect(pipeline).toEqual({
+      name: 'Pipeline Name',
+      status: Status.Failed,
+      stages: [ {
+        name: 'Build',
+        status: Status.Failed
+      } ]
+    })
+  })
+
   afterEach(() => (fetch as any).stubs.reset())
 })

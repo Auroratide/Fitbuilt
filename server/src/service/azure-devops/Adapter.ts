@@ -38,6 +38,8 @@ export class Adapter implements ServiceAdapter<Config> {
       return Status.Passed
     else if(build.status === BuildStatus.InProgress)
       return Status.InProgress
+    else if(build.result === BuildResult.Failed)
+      return Status.Failed
     else
       return Status.Unknown
   }
@@ -49,6 +51,8 @@ export class Adapter implements ServiceAdapter<Config> {
       return Status.InProgress
     else if(record.state === TimelineRecordState.Pending)
       return Status.Pending
+    else if(record.result === TaskResult.Failed)
+      return Status.Failed
     else
       return Status.Unknown
   }
