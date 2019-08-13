@@ -2,6 +2,8 @@
   box-sizing: border-box;
 }
 
-body {
+html {
   font-family: 'Nunito', sans-serif;
+  background: #484848;
+  color: #f8f8f8;
 }
