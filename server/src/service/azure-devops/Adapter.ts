@@ -1,6 +1,14 @@
 import { ServiceAdapter } from '../ServiceAdapter'
 import { Config } from './Config'
-import { AzureDevops, TimelineRecord } from './AzureDevops'
+import {
+  AzureDevops,
+  TimelineRecord,
+  Build,
+  BuildStatus,
+  BuildResult,
+  TaskResult,
+  TimelineRecordState
+} from './AzureDevops'
 import { Pipeline, Stage, Status } from '../../Pipeline'
 
 export class Adapter implements ServiceAdapter<Config> {
@@ -16,7 +24,7 @@ export class Adapter implements ServiceAdapter<Config> {
 
     return {
       name: build.definition.name,
-      status: Status.Passed,
+      status: this.statusOfBuild(build),
       stages: timeline.records
         .filter(this.keepOnlyTasks)
         .filter(this.removeBuiltInAzureStages)
@@ -25,11 +33,31 @@ export class Adapter implements ServiceAdapter<Config> {
     }
   }
 
-  private keepOnlyTasks(record: TimelineRecord): boolean {
+  private statusOfBuild = (build: Build): Status => {
+    if(build.result === BuildResult.Succeeded)
+      return Status.Passed
+    else if(build.status === BuildStatus.InProgress)
+      return Status.InProgress
+    else
+      return Status.Unknown
+  }
+
+  private statusOfStage = (record: TimelineRecord): Status => {
+    if(record.result === TaskResult.Succeeded)
+      return Status.Passed
+    else if(record.state === TimelineRecordState.InProgress)
+      return Status.InProgress
+    else if(record.state === TimelineRecordState.Pending)
+      return Status.Pending
+    else
+      return Status.Unknown
+  }
+
+  private keepOnlyTasks = (record: TimelineRecord): boolean => {
     return record.type === 'Task'
   }
 
-  private removeBuiltInAzureStages(record: TimelineRecord): boolean {
+  private removeBuiltInAzureStages = (record: TimelineRecord): boolean => {
     return ![
       'Checkpoint',
       'Initialize job',
@@ -41,14 +69,14 @@ export class Adapter implements ServiceAdapter<Config> {
     ].includes(record.name)
   }
 
-  private byOrderNumber(left: TimelineRecord, right: TimelineRecord): number {
+  private byOrderNumber = (left: TimelineRecord, right: TimelineRecord): number => {
     return left.order - right.order
   }
 
-  private toStage(record: TimelineRecord): Stage {
+  private toStage = (record: TimelineRecord): Stage => {
     return {
       name: record.name,
-      status: Status.Passed
+      status: this.statusOfStage(record)
     }
   }
 }

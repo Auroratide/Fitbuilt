@@ -45,5 +45,26 @@ describe('Azure Devops', () => {
     })
   })
 
+  it('indicates stages that are in progress', async () => {
+    scenarios.buildIsInProgress()
+
+    const pipeline = await adapter.currentPipeline('123', config)
+
+    expect(pipeline).toEqual({
+      name: 'Pipeline Name',
+      status: Status.InProgress,
+      stages: [ {
+        name: 'Build',
+        status: Status.Passed
+      }, {
+        name: 'Functional Tests',
+        status: Status.InProgress
+      }, {
+        name: 'Contract Tests',
+        status: Status.Pending
+      } ]
+    })
+  })
+
   afterEach(() => (fetch as any).stubs.reset())
 })
