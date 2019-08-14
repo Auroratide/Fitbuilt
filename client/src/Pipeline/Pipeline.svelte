@@ -1,5 +1,6 @@
 <script>
   import Stage from '../Stage'
+  import Heart from '../Heart'
   import fetchPipeline from './fetch-pipeline'
 
   export let id
@@ -11,23 +12,41 @@
   <p>Waiting...</p>
 {:then pipeline}
   <article class="pipeline">
-    <h1>{pipeline.name}</h1>
+    <h1 class="name">{pipeline.name}</h1>
     <div class="stages">
       {#each pipeline.stages as stage (stage.name)}
         <Stage name={stage.name} status={stage.status} />
       {/each}
     </div>
+    <aside class="icon">
+      <Heart />
+    </aside>
   </article>
 {/await}
 
 <style>
   .pipeline {
-    text-align: center;
+    display: grid;
+    grid-template: auto 1fr / 1fr 5fr;
+    grid-template-areas:
+      "icon ."
+      "icon .";
+    gap: 1em;
+    padding: 1em;
+  }
+
+  .name {
+    font-size: 2.5em;
+    margin: 0 0 0.25em;
   }
 
   .stages {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 0.5em;
+  }
+
+  .icon {
+    grid-area: icon;
   }
 </style>

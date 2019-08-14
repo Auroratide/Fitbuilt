@@ -6,30 +6,37 @@
 </script>
 
 <section class={`stage ${status}`}>
-  <h1>{name}</h1>
+  <h1 class="name">{name}</h1>
 </section>
 
 <style>
   .stage {
-    border: 0.25em solid;
     display: flex;
     align-items: center;
     justify-content: center;
+    text-align: center;
+    padding: 1em;
+    border-radius: 0.5em;
+  }
+
+  .name {
+    font-size: 2em;
+    margin: 0;
   }
 
   .passed {
-    border-color: green;
+    background: #00a200;
   }
 
   .failed {
-    border-color: red;
+    background: #d20000;
   }
 
   .in-progress {
-    border-color: yellow;
+    background: #00a2d2;
   }
 
   .pending {
-    border-color: grey;
+    background: #a0a0a0;
   }
 </style>
