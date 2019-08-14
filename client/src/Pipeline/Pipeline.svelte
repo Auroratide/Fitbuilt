@@ -29,18 +29,20 @@
     display: grid;
     grid-template: auto 1fr / 1fr 5fr;
     grid-template-areas:
-      "icon ."
-      "icon .";
+      ". name"
+      "icon stages";
     gap: 1em;
     padding: 1em;
   }
 
   .name {
+    grid-area: name;
     font-size: 2.5em;
     margin: 0 0 0.25em;
   }
 
   .stages {
+    grid-area: stages;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 0.5em;
