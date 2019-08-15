@@ -5,6 +5,7 @@ const toStageSchema = raw => ( {
 
 const toPipelineSchema = raw => ( {
   name: raw.name,
+  status: raw.status,
   stages: raw.stages.map(toStageSchema)
 } )
 
