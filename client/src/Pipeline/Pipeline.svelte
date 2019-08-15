@@ -1,7 +1,8 @@
 <script>
-  import Stage, { InProgress } from '../Stage'
+  import Stage, { Passed, Failed, InProgress } from '../Stage'
   import Heart from '../Heart'
   import Footprints from '../Footprints'
+  import Fire from '../Fire'
   import fetchPipeline from './fetch-pipeline'
 
   export let id
@@ -20,10 +21,14 @@
       {/each}
     </div>
     <aside class="icon">
-      {#if pipeline.status === InProgress}
-        <Footprints />
-      {:else}
+      {#if pipeline.status === Passed}
         <Heart />
+      {:else if pipeline.status === InProgress}
+        <Footprints />
+      {:else if pipeline.status === Failed}
+        <Fire />
+      {:else}
+        <p>Something <em>horrible</em> has happened.</p>
       {/if}
     </aside>
   </article>

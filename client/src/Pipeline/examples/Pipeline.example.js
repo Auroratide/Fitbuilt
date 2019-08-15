@@ -50,6 +50,18 @@ describe('Pipeline', () => {
     expect(footprints).toBeInTheDocument()
   })
 
+  it('displays fire when the pipeline is red', async () => {
+    scenarios.buildFailed()
+
+    wrapper = render(Pipeline, { props: {
+      id: '1'
+    }})
+    await waitForApi()
+
+    const fire = icon('Fire')
+    expect(fire).toBeInTheDocument()
+  })
+
   afterEach(() => {
     fetch.restore()
     cleanup()
