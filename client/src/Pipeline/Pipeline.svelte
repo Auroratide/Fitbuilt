@@ -1,8 +1,8 @@
 <script>
-  import Stage, { Passed, Failed, InProgress } from '../Stage'
-  import Heart from '../Heart'
-  import Footprints from '../Footprints'
-  import Fire from '../Fire'
+  import Stage, { Passed, Failed, InProgress } from './Stage'
+  import Heart from './Heart'
+  import Footprints from './Footprints'
+  import Fire from './Fire'
   import fetchPipeline from './fetch-pipeline'
 
   export let id

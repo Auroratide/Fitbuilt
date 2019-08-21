@@ -3,7 +3,7 @@ import {
   Failed,
   InProgress,
   Pending
-} from '../../Stage'
+} from '../Stage'
 import fetch from 'fetch-mock'
 
 const url = () => '/api/services/azure-devops/pipelines/1'
