@@ -9,6 +9,15 @@ const toPipelineSchema = raw => ( {
   stages: raw.stages.map(toStageSchema)
 } )
 
-export default (n) => fetch(`/api/services/azure-devops/pipelines/${n}`)
+const toQuery = params => {
+  const entries = Object.entries(params)
+  if(entries.length) {
+    return '?' + entries.map(([key, value]) => `${key}=${value}`).join('&')
+  } else {
+    return ''
+  }
+}
+
+export default (id, params) => fetch(`/api/services/azure-devops/pipelines/${id}${toQuery(params)}`)
   .then(res => res.json())
   .then(toPipelineSchema)

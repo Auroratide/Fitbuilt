@@ -78,6 +78,21 @@ describe('Pipeline', () => {
     expect(passedStage).toBeInTheDocument()
   })
 
+  it('includes additional params in the api call', async () => {
+    scenarios.requiresAdditionalParams()
+
+    wrapper = render(Pipeline, { props: {
+      id: '1',
+      params: {
+        fruit: 'apple',
+        vegetable: 'tomato'
+      }
+    }})
+    await waitForApi()
+
+    expect(stage('Passed Stage')).toBeInTheDocument()
+  })
+
   afterEach(() => {
     fetch.restore()
     cleanup()

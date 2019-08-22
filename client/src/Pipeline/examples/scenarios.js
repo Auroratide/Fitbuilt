@@ -84,3 +84,17 @@ export const inProgressThenPassed = () => {
     overwriteRoutes: false
   })
 }
+
+export const requiresAdditionalParams = () => {
+  fetch.get(url() + '?fruit=apple&vegetable=tomato', {
+    status: 200,
+    body: {
+      name: 'Pipeline',
+      status: Passed,
+      stages: [ {
+        name: 'Passed Stage',
+        status: Passed
+      } ]
+    }
+  })
+}

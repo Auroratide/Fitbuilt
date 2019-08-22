@@ -6,10 +6,11 @@
   import fetchPipeline from './fetch-pipeline'
 
   export let id
+  export let params = {}
   export let interval = 5000
 
   let pipeline = {}
-  const refresh = () => fetchPipeline(id)
+  const refresh = () => fetchPipeline(id, params)
     .then(p => pipeline = p)
     .then(() => setTimeout(refresh, interval))
 
