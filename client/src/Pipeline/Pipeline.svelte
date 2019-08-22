@@ -6,13 +6,19 @@
   import fetchPipeline from './fetch-pipeline'
 
   export let id
+  export let interval = 5000
 
-  const pipeline = fetchPipeline(id)
+  let pipeline = {}
+  const refresh = () => fetchPipeline(id)
+    .then(p => pipeline = p)
+    .then(() => setTimeout(refresh, interval))
+
+  const firstFetch = refresh()
 </script>
 
-{#await pipeline}
+{#await firstFetch}
   <p>Waiting...</p>
-{:then pipeline}
+{:then}
   <article class="pipeline">
     <h1 class="name">{pipeline.name}</h1>
     <div class="stages">

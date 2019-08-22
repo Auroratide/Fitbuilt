@@ -62,6 +62,22 @@ describe('Pipeline', () => {
     expect(fire).toBeInTheDocument()
   })
 
+  it('refreshes every so often to show the most current status of the build', async () => {
+    scenarios.inProgressThenPassed()
+
+    wrapper = render(Pipeline, { props: {
+      id: '1',
+      interval: 50
+    }})
+    await waitForApi()
+
+    const inProgressStage = stage('In Progress Stage')
+    expect(inProgressStage).toBeInTheDocument()
+
+    const passedStage = await waitForElement(() => stage('Passed Stage'))
+    expect(passedStage).toBeInTheDocument()
+  })
+
   afterEach(() => {
     fetch.restore()
     cleanup()

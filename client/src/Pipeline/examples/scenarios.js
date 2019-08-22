@@ -58,3 +58,29 @@ export const buildPassed = () => {
     }
   })
 }
+
+export const inProgressThenPassed = () => {
+  fetch.once(url(), {
+    status: 200,
+    body: {
+      name: 'Pipeline',
+      status: InProgress,
+      stages: [ {
+        name: 'In Progress Stage',
+        status: InProgress
+      } ]
+    }
+  }).get(url(), {
+    status: 200,
+    body: {
+      name: 'Pipeline',
+      status: Passed,
+      stages: [ {
+        name: 'Passed Stage',
+        status: Passed
+      } ]
+    }
+  }, {
+    overwriteRoutes: false
+  })
+}
