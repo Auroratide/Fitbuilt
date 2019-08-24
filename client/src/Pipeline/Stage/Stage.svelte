@@ -34,9 +34,16 @@
 
   .in-progress {
     background: #00a2d2;
+    animation: show-progress 2.5s infinite linear;
   }
 
   .pending {
     background: #a0a0a0;
+  }
+
+  @keyframes show-progress {
+    0% { background: rgba(0, 162, 210, 1); }
+    50% { background: rgba(0, 162, 210, 0.25); }
+    100% { background: rgba(0, 162, 210, 1); }
   }
 </style>
