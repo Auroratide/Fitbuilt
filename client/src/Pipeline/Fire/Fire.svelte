@@ -6,6 +6,30 @@
 
 <style>
   .fire {
-    color: #f79719;
+    color: #f7cb19;
+    filter: drop-shadow(0 -0.75em 2em rgba(247, 155, 25, 1));
+    animation: flicker 3s infinite;
+  }
+
+  @keyframes flicker {
+    0% { filter: drop-shadow(0 -0.75em 2em rgba(247, 155, 25, 0.65)); }
+    10% { filter: drop-shadow(0 -0.75em 2em rgba(247, 155, 25, 0.4)); }
+    16% { filter: drop-shadow(0 -0.75em 2em rgba(247, 155, 25, 0.6)); }
+    20% { filter: drop-shadow(0 -0.75em 2em rgba(247, 155, 25, 0.4)); }
+    24% { filter: drop-shadow(0 -0.75em 2em rgba(247, 155, 25, 1)); }
+    26% { filter: drop-shadow(0 -0.75em 2em rgba(247, 155, 25, 0.6)); }
+    36% { filter: drop-shadow(0 -0.75em 2em rgba(247, 155, 25, 0.8)); }
+    44% { filter: drop-shadow(0 -0.75em 2em rgba(247, 155, 25, 0.5)); }
+    56% { filter: drop-shadow(0 -0.75em 2em rgba(247, 155, 25, 0.7)); }
+    60% { filter: drop-shadow(0 -0.75em 2em rgba(247, 155, 25, 0.4)); }
+    66% { filter: drop-shadow(0 -0.75em 2em rgba(247, 155, 25, 0.6)); }
+    68% { filter: drop-shadow(0 -0.75em 2em rgba(247, 155, 25, 1)); }
+    72% { filter: drop-shadow(0 -0.75em 2em rgba(247, 155, 25, 0.7)); }
+    74% { filter: drop-shadow(0 -0.75em 2em rgba(247, 155, 25, 1)); }
+    80% { filter: drop-shadow(0 -0.75em 2em rgba(247, 155, 25, 0.6)); }
+    88% { filter: drop-shadow(0 -0.75em 2em rgba(247, 155, 25, 0.4)); }
+    90% { filter: drop-shadow(0 -0.75em 2em rgba(247, 155, 25, 0.95)); }
+    94% { filter: drop-shadow(0 -0.75em 2em rgba(247, 155, 25, 0.5)); }
+    100% { filter: drop-shadow(0 -0.75em 2em rgba(247, 155, 25, 0.65)); }
   }
 </style>
