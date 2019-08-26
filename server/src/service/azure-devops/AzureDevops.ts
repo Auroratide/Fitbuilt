@@ -3,7 +3,7 @@ import fetch from '../../fetch'
 
 // temporary solution
 // username:personalaccesstoken
-const AZURE_DEVOPS_CRED = process.env.AZURE_DEVOPS_CRED
+const AZURE_DEVOPS_CRED = process.env.AZURE_DEVOPS_CRED || ''
 
 export class AzureDevops {
   public mostRecentBuild(definitionId: number, config: Config): Promise<Build> {
