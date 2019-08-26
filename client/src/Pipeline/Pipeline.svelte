@@ -63,12 +63,11 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 0.5em;
-    align-items: flex-start;
   }
 
   .icon {
     grid-area: icon;
-    max-width: 10em;
-    margin: auto;
+    max-width: 12em;
+    margin: 0 auto;
   }
 </style>
