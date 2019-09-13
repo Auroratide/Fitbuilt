@@ -21,17 +21,24 @@ export class Adapter implements ServiceAdapter<Config> {
   public async currentPipeline(id: string, config: Config): Promise<Pipeline> {
     const build = await this.service.mostRecentBuild(parseInt(id), config)
     const timeline = await this.service.timelineForBuild(build.id, config)
+    const records = this.orderByParentalHierarchy(timeline.records.sort(this.byOrderNumber));
 
     return {
       name: build.definition.name,
       status: this.statusOfBuild(build),
-      stages: timeline.records
-        .filter(this.keepOnlyTasks)
+      stages: records
+        .filter(this.forType('Task'))
         .filter(this.removeBuiltInAzureStages)
-        .sort(this.byOrderNumber)
         .map(this.toStage)
     }
   }
+
+  private orderByParentalHierarchy = (records: Array<TimelineRecord>, parentId: String = null): Array<TimelineRecord> =>
+    records
+      .filter(r => r.parentId === parentId)
+      .reduce((aggregate, record) => aggregate
+        .concat([record])
+        .concat(this.orderByParentalHierarchy(records, record.id)), [])
 
   private statusOfBuild = (build: Build): Status => {
     if(build.result === BuildResult.Succeeded)
@@ -57,9 +64,8 @@ export class Adapter implements ServiceAdapter<Config> {
       return Status.Unknown
   }
 
-  private keepOnlyTasks = (record: TimelineRecord): boolean => {
-    return record.type === 'Task'
-  }
+  private forType = (type: string) =>
+    (record: TimelineRecord): boolean => record.type === type
 
   private removeBuiltInAzureStages = (record: TimelineRecord): boolean => {
     return ![

@@ -81,5 +81,35 @@ describe('Azure Devops', () => {
     })
   })
 
+  it('sorts tasks appropriately by their stage', async () => {
+    scenarios.buildWithStages()
+
+    const pipeline = await adapter.currentPipeline('123', config)
+
+    expect(pipeline).toEqual({
+      name: 'Pipeline Name',
+      status: Status.Passed,
+      stages: [ {
+        name: 'Task 1-1-1',
+        status: Status.Passed
+      }, {
+        name: 'Task 1-1-2',
+        status: Status.Passed
+      }, {
+        name: 'Task 1-2-1',
+        status: Status.Passed
+      }, {
+        name: 'Task 2-1-1',
+        status: Status.Passed
+      }, {
+        name: 'Task 2-1-2',
+        status: Status.Passed
+      }, {
+        name: 'Task 2-2-1',
+        status: Status.Passed
+      } ]
+    })
+  })
+
   afterEach(() => (fetch as any).stubs.reset())
 })
