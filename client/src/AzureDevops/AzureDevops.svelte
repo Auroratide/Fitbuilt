@@ -7,4 +7,4 @@
   export let definitionId
 </script>
 
-<Pipeline id={definitionId} params={{ url, collection, project }} />
+<Pipeline service="azure-devops" id={definitionId} params={{ url, collection, project }} />

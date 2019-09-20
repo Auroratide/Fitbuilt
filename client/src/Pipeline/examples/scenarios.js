@@ -6,7 +6,7 @@ import {
 } from '../Stage'
 import fetch from 'fetch-mock'
 
-const url = () => '/api/services/azure-devops/pipelines/1'
+const url = () => '/api/services/my-service/pipelines/1'
 
 export const pipelineIsBuilding = () => {
   fetch.get(url(), {

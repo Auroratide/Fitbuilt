@@ -74,8 +74,8 @@ export interface BuildTimelineResponse {
 }
 
 export interface TimelineRecord {
-  id: string,
-  parentId?: string,
+  id: string
+  parentId?: string
   type: string
   name: string
   order: number

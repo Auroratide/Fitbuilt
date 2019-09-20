@@ -5,12 +5,13 @@
   import Fire from './Fire'
   import fetchPipeline from './fetch-pipeline'
 
+  export let service
   export let id
   export let params = {}
   export let interval = 5000
 
   let pipeline = {}
-  const refresh = () => fetchPipeline(id, params)
+  const refresh = () => fetchPipeline(service, id, params)
     .then(p => pipeline = p)
     .then(() => setTimeout(refresh, interval))
 

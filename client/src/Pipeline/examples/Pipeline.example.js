@@ -13,8 +13,9 @@ describe('Pipeline', () => {
   it('displays stages from the pipelines API', async () => {
     scenarios.buildFailed()
 
-    // <Pipeline id="123" />
+    // <Pipeline service="my-service" id="123" />
     wrapper = render(Pipeline, { props: {
+      service: 'my-service',
       id: '1'
     }})
     await waitForApi()
@@ -30,6 +31,7 @@ describe('Pipeline', () => {
     scenarios.buildPassed()
 
     wrapper = render(Pipeline, { props: {
+      service: 'my-service',
       id: '1'
     }})
     await waitForApi()
@@ -42,6 +44,7 @@ describe('Pipeline', () => {
     scenarios.pipelineIsBuilding()
 
     wrapper = render(Pipeline, { props: {
+      service: 'my-service',
       id: '1'
     }})
     await waitForApi()
@@ -54,6 +57,7 @@ describe('Pipeline', () => {
     scenarios.buildFailed()
 
     wrapper = render(Pipeline, { props: {
+      service: 'my-service',
       id: '1'
     }})
     await waitForApi()
@@ -66,6 +70,7 @@ describe('Pipeline', () => {
     scenarios.inProgressThenPassed()
 
     wrapper = render(Pipeline, { props: {
+      service: 'my-service',
       id: '1',
       interval: 50
     }})
@@ -82,6 +87,7 @@ describe('Pipeline', () => {
     scenarios.requiresAdditionalParams()
 
     wrapper = render(Pipeline, { props: {
+      service: 'my-service',
       id: '1',
       params: {
         fruit: 'apple',

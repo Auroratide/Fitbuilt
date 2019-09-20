@@ -18,6 +18,6 @@ const toQuery = params => {
   }
 }
 
-export default (id, params) => fetch(`/api/services/azure-devops/pipelines/${id}${toQuery(params)}`)
+export default (service, id, params) => fetch(`/api/services/${service}/pipelines/${id}${toQuery(params)}`)
   .then(res => res.json())
   .then(toPipelineSchema)
