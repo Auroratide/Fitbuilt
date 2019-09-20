@@ -3,5 +3,5 @@
 </script>
 
 <main>
-  <Pipeline />
+  <Pipeline service="stub-service" id="1" params={{ scenario: 'passed' }} />
 </main>
