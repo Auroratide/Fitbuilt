@@ -21,7 +21,7 @@
 {#await firstFetch}
   <p>Waiting...</p>
 {:then}
-  <article class="pipeline">
+  <article class={`pipeline ${pipeline.status}`}>
     <h1 class="name">{pipeline.name}</h1>
     <div class="stages">
       {#each pipeline.stages as stage (stage.name)}
@@ -56,7 +56,13 @@
   .name {
     grid-area: name;
     font-size: 2.5em;
-    margin: 0 0 0.25em;
+    margin: 0;
+    padding: 0.25em;
+    border-radius: 0.25em;
+  }
+
+  .failed .name {
+    background: #d20000;
   }
 
   .stages {
