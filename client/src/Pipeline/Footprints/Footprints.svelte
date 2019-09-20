@@ -7,6 +7,7 @@
 
 <style>
   .footprints {
+    height: 100%;
     color: #00a2d2;
     transform: rotate(-45deg);
   }

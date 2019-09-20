@@ -6,6 +6,7 @@
 
 <style>
   .fire {
+    height: 100%;
     color: #f7cb19;
     filter: drop-shadow(0 -0.75em 2em rgba(247, 155, 25, 1));
     animation: flicker 3s infinite;

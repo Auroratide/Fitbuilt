@@ -15,10 +15,12 @@
   }
 
   .heart {
+    height: 100%;
     color: #cf67a0;
   }
 
   .heart-pulse {
+    height: 100%;
     color: #cf67a0;
     position: absolute;
     left: 0;

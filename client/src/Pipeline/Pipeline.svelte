@@ -75,6 +75,8 @@
   .icon {
     grid-area: icon;
     max-width: 12em;
+    max-height: 12em;
     margin: 0 auto;
+    text-align: center;
   }
 </style>
