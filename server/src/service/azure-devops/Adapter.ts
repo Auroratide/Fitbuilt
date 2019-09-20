@@ -21,24 +21,17 @@ export class Adapter implements ServiceAdapter<Config> {
   public async currentPipeline(id: string, config: Config): Promise<Pipeline> {
     const build = await this.service.mostRecentBuild(parseInt(id), config)
     const timeline = await this.service.timelineForBuild(build.id, config)
-    const records = this.orderByParentalHierarchy(timeline.records.sort(this.byOrderNumber));
 
     return {
       name: build.definition.name,
       status: this.statusOfBuild(build),
-      stages: records
-        .filter(this.forType('Task'))
+      stages: timeline.records
+        .filter(this.forType('Stage'))
+        .sort(this.byOrderNumber)
         .filter(this.removeBuiltInAzureStages)
         .map(this.toStage)
     }
   }
-
-  private orderByParentalHierarchy = (records: Array<TimelineRecord>, parentId: String = null): Array<TimelineRecord> =>
-    records
-      .filter(r => r.parentId === parentId)
-      .reduce((aggregate, record) => aggregate
-        .concat([record])
-        .concat(this.orderByParentalHierarchy(records, record.id)), [])
 
   private statusOfBuild = (build: Build): Status => {
     if(build.result === BuildResult.Succeeded)

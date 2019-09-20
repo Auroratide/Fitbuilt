@@ -30,7 +30,7 @@ describe('Azure Devops', () => {
     })
   })
 
-  it('filters out non-task and azure-specific stages', async () => {
+  it('filters out non-stage and azure-specific stages', async () => {
     scenarios.withExtraneousStages()
 
     const pipeline = await adapter.currentPipeline('123', config)
@@ -77,36 +77,6 @@ describe('Azure Devops', () => {
       stages: [ {
         name: 'Build',
         status: Status.Failed
-      } ]
-    })
-  })
-
-  it('sorts tasks appropriately by their stage', async () => {
-    scenarios.buildWithStages()
-
-    const pipeline = await adapter.currentPipeline('123', config)
-
-    expect(pipeline).toEqual({
-      name: 'Pipeline Name',
-      status: Status.Passed,
-      stages: [ {
-        name: 'Task 1-1-1',
-        status: Status.Passed
-      }, {
-        name: 'Task 1-1-2',
-        status: Status.Passed
-      }, {
-        name: 'Task 1-2-1',
-        status: Status.Passed
-      }, {
-        name: 'Task 2-1-1',
-        status: Status.Passed
-      }, {
-        name: 'Task 2-1-2',
-        status: Status.Passed
-      }, {
-        name: 'Task 2-2-1',
-        status: Status.Passed
       } ]
     })
   })
